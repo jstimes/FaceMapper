@@ -3,8 +3,7 @@ package gui;
 public class Main {
 	
 	public static void main(String[] args) {
-		Window window = new Window(960, 540);
-		
+		Window window = new Window();
 	}
 
 }

@@ -17,20 +17,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * GUI to handle image selection and calling of processing commands
+ * @author Andrew Dailey
+ *
+ */
 public class Window extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	private int width, height;
+	private final int width = 960;
+	private final int height = 540;
 	private JPanel menuPanel, viewPanel;
 	
 	/**
 	 * Contructs a new GUI
-	 * @param width Width of the window
-	 * @param height Height of the window
 	 */
-	public Window(int width, int height) {
-		this.width = width;
-		this.height = height;
+	public Window() {
 		init();
 	}
 	
@@ -86,23 +88,47 @@ public class Window extends JFrame {
 	 * Select images to be used for training
 	 */
 	private void train() {
-		System.out.println("TODO: Train!");
+		//TODO
+		JFileChooser openFile = new JFileChooser();
+		openFile.setMultiSelectionEnabled(true);
+		openFile.showOpenDialog(null);
+		
+		// Create a map using the file paths of selected images and send to training functions
+		if(openFile.getSelectedFiles() != null) {
+			printFilePaths(openFile.getSelectedFiles());
+		}
+
+	}
+	
+	/**
+	 * Debug method for printing the locations of multiple selected files
+	 * @param files File objects of which to print paths
+	 */
+	private void printFilePaths(File[] files) {
+		for (int i = 0; i < files.length; i++) {
+			System.out.println(files[i].getAbsolutePath());
+		}
 	}
 	
 	/**
 	 * Select a single image to be analyzed
 	 */
 	private void identify() {
-		System.out.println("TODO: Identify!");
+		//TODO
 		JFileChooser openFile = new JFileChooser();
 		openFile.showOpenDialog(null);
 		
-		viewPanel.removeAll();
-		viewPanel.add(createImageComponent(openFile.getSelectedFile().getAbsolutePath()));
-		revalidate();
-		repaint();
-		
-		System.out.println(openFile.getSelectedFile().getAbsolutePath());
+		if(openFile.getSelectedFile() != null) {
+			// Send this location to processing
+			System.out.println(openFile.getSelectedFile().getAbsolutePath());
+			
+			// Display processed image with name overlays
+			viewPanel.removeAll();
+			viewPanel.add(createImageComponent(openFile.getSelectedFile().getAbsolutePath()));
+			revalidate();
+			repaint();
+		}
+
 	}
 	
 	/**
