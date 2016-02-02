@@ -7,6 +7,8 @@ import sys
 import identify_users
 from PIL import Image
 
+#TODO possibly split this script into two functions,
+# one that takes a directory and another just a bunch of possibly random filepaths?
 def main():
 	try:
 		pathToImages = str(sys.argv[1])
@@ -68,7 +70,6 @@ def main():
 				totalFaces = totalFaces + 1
 				images.append(image[y: y + h, x: x + w])
 				labels.append(nbr)
-				#cv2.imshow("Adding faces to traning set...", image[y: y + h, x: x + w])
 				cv2.waitKey(1000)
 
 			#print "Found", faceCount, "faces in image", imageCount, "for user: ", nbr

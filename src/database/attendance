@@ -1,1 +1,27 @@
-[{"records":[{"date":"Mon Feb 01 02:03:04 CST 2016","students":[{"confidence":0.0,"name":"Paul"}],"mapPath":"src\/database\/facemaps\/facemap15.jpg"},{"date":"Mon Feb 01 02:03:29 CST 2016","students":[{"confidence":0.0,"name":"Jacob"}],"mapPath":"src\/database\/facemaps\/facemap16.jpg"}],"class":"math"}]
+[
+  {
+    "records": [
+      {
+        "date": "Mon Feb 01 02:03:29 CST 2016",
+        "students": [
+          {
+            "confidence": 0.0,
+            "name": "Jacob"
+          }
+        ],
+        "mapPath": "src\/database\/facemaps\/facemap16.jpg"
+      },
+      {
+        "date": "01022016",
+        "students": [
+          {
+            "confidence": 0.0,
+            "name": "Jacob"
+          }
+        ],
+        "mapPath": "src\/database\/facemaps\/facemap4.jpg"
+      }
+    ],
+    "class": "math"
+  }
+]

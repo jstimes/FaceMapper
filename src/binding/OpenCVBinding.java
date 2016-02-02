@@ -8,8 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import binding.FaceMap.FaceMapElement;
 import database.Database;
 
+//This class serves as an interface between the GUI and the python backend
+// It calls scripts, analyzes results and returns the Result structure defined below
+// so the GUI can display the appropriate information
 public class OpenCVBinding {
 	
 	final static String pythonFilePath = "src/python/";
@@ -17,24 +21,33 @@ public class OpenCVBinding {
 	final static String recognizeScript = "identify_users.py";
 	final static String noRecognizedFacesMsg = "0 faces found";
 	
-	public static void main(String[] args) throws IOException {
-		
-		System.out.println("Training...");
-		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("Paul", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\paul");
-		map.put("Jacob", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob");
-		map.put("Andrew", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\andrew");
-		//FaceMap training = recognize("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\paul\\paul.1");
-		Result training = recognize("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.1.jpg", true);
-		//System.out.println(training.label);
-		//Result training = trainDir(map);
-		
-		training.printOutput();
-		training.printWarnings();
-		training.printErrors();
-	}
+//	public static void main(String[] args) throws IOException {
+//		
+//		System.out.println("Training...");
+//		HashMap<String, String> map = new HashMap<String,String>();
+//		map.put("Paul", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\paul");
+//		map.put("Jacob", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob");
+//		map.put("Andrew", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\andrew");
+//		//FaceMap training = recognize("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\paul\\paul.1");
+//		Result training = recognize("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.1.jpg", true);
+//		//System.out.println(training.label);
+//		//Result training = trainDir(map);
+//		
+//		training.printOutput();
+//		training.printWarnings();
+//		training.printErrors();
+//		for(String entry : Database.retrieveStudentAttendanceRecords("Jacob")){
+//			System.out.println(entry);
+//		}
+//		FaceMap map = Database.retrieveDateAttendanceRecords("math", "01022016");
+//		for(FaceMapElement fme : map.elements){
+//			System.out.println(fme.name + " " + fme.confidence);
+//		}
+//	}
 	
-	//Call this if images for each person are scattered and not in the same directory
+	//Trains recognition algorithm on the (name, face images) pairs supplied
+	// Parameter should be Map<Name, List<filepaths to images of Name>>
+	// Call this if images for each person are scattered and not in the same directory
 	public static Result trainFiles(Map<String, List<String>> mapOfPeopleToFiles){
 		Result result = new Result();
 		for(String key : mapOfPeopleToFiles.keySet()){
@@ -44,6 +57,8 @@ public class OpenCVBinding {
 		return result;
 	}
 	
+	//Trains recognition algorithm on the (name, face images) pairs supplied
+	// Parameter should be Map<Name, filepath-to-directory-of-faces-of-names>
 	//Call this if for each user to be trained on has their own directory of images
 	public static Result trainDir(Map<String, String> mapOfPeopleToDirectories) {
 		Result result = new Result();
@@ -59,7 +74,7 @@ public class OpenCVBinding {
 			
 			if(pythonResult.success){
 				for(String output : pythonResult.outputs){
-					if(output.contains("failure")){
+					if(output.contains("failure")) {
 						result.appendError("Failed to train model on " + user);
 					}
 					else if (output.contains("Error")){
@@ -115,7 +130,7 @@ public class OpenCVBinding {
 			}
 			result.facemap.setImagePath(facemapPath);
 			if(attendance){
-				Database.takeAttendance(result.facemap, "math", new java.util.Date());
+				Database.takeAttendance(result.facemap, "math");
 			}
 		}
 		else {
@@ -127,6 +142,7 @@ public class OpenCVBinding {
 		return result;
 	}
 	
+	//This method runs the specified script with the given arguments, if any
 	private static Result executeScript(String script, ArrayList<String> arguments) {
 		try {
 			String args = "";
@@ -161,7 +177,8 @@ public class OpenCVBinding {
 	}
 	
 	//A structure to hold our results from executing python scripts
-	static class Result {
+	/// and to return information about them to the GUI
+	public static class Result {
 		
 		public boolean success;
 		public ArrayList<String> outputs;

@@ -8,6 +8,8 @@ import numpy as np
 from PIL import Image
 
 def identify(pathToTestImage,isMainScript,newImagePath):
+    
+    #TODO move this try block to the main method part
     try:
         #pathToTrainedModels = str(sys.argv[1])
         pathToTrainedModel = "src/python/TrainedModel"
@@ -20,13 +22,9 @@ def identify(pathToTestImage,isMainScript,newImagePath):
     cascadePath = "src/python/haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cascadePath)
 
-    #print "Loading model"
-
     # For face recognition we will use the the LBPH Face Recognizer
     recognizer = cv2.createLBPHFaceRecognizer() 
     recognizer.load(pathToTrainedModel)
-
-    #print "Opening image for prediction"
 
     #Open image for prediction
     predict_image_pil = Image.open(pathToTestImage).convert('L')
@@ -58,7 +56,11 @@ def identify(pathToTestImage,isMainScript,newImagePath):
         if isMainScript:
         	print nbr_predicted, conf
         if nbr_predicted is None: 
-        	print "null"  #TODO handle this case
+         #TODO handle this case..might not even happen
+         # because I've never seen it and the model may try to match the image no matter what
+         # but i haven't actually found any documentation to confirm this
+        	print "null"  
+         
         #parameters are image, label-text, origin point for label, font, font-size, RGB text color, thickness
         cv2.putText(img, label, (x,y+h), cv2.FONT_HERSHEY_PLAIN, 3, (243,74,32), 2);
         results.append(nbr_predicted)
