@@ -1,14 +1,18 @@
 package binding;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.annotation.Target;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import binding.FaceMap.FaceMapElement;
 import database.Database;
 
 //This class serves as an interface between the GUI and the python backend
@@ -16,6 +20,7 @@ import database.Database;
 // so the GUI can display the appropriate information
 public class OpenCVBinding {
 	
+	final static String FACE_IMAGES_PATH = "data\\faces";
 	final static String pythonFilePath = "src/python/";
 	final static String trainScript = "train_for_user.py";
 	final static String recognizeScript = "identify_users.py";
@@ -43,6 +48,15 @@ public class OpenCVBinding {
 //		for(FaceMapElement fme : map.elements){
 //			System.out.println(fme.name + " " + fme.confidence);
 //		}
+//		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+//		LinkedList<String> images = new LinkedList<String>();
+//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.1.jpg");
+//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.2.jpg");
+//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.3.jpg");
+//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.4.jpg");
+//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.5.jpg");
+//		map.put("Jacob", images);
+//		trainFiles(map);
 //	}
 	
 	//Trains recognition algorithm on the (name, face images) pairs supplied
@@ -50,11 +64,48 @@ public class OpenCVBinding {
 	// Call this if images for each person are scattered and not in the same directory
 	public static Result trainFiles(Map<String, List<String>> mapOfPeopleToFiles){
 		Result result = new Result();
+		HashMap<String, String> usersToDirectories = new HashMap<>();
 		for(String key : mapOfPeopleToFiles.keySet()){
-			//TODO ... need to adjust training script to handle this, or make a new directory and put all these images there...
-			System.out.println(key);
+			String nameLower = key.toLowerCase();
+			File userDirectory = new File(FACE_IMAGES_PATH + "\\" + nameLower);
+			
+			if(!userDirectory.exists()){
+				
+				//Directory of face images for this user does not yet exist so make one:
+				if(!userDirectory.mkdirs()){
+					result.appendError("Internal error - failed to create faces directory for " + key + " with path: " + userDirectory.getPath());
+					return result;
+				}
+			}
+			//directory may or may not have existed before, but it must now
+			// So now add supplied images to this directory:
+			List<String> imagePaths = mapOfPeopleToFiles.get(key);
+			for(String imagePath : imagePaths){
+				File imageFile = new File(imagePath);
+				if(!imageFile.exists()){
+					result.appendError("Internal error - couldn't find file: " + imagePath);
+					return result;
+				}
+				String imageName = imageFile.getName();
+				File target = new File(userDirectory.getAbsolutePath() + "\\" + imageName);
+				try {
+					//Copies the original file to a new file in this users face-images directory
+					// If the file already exists here (based on same names), it will replace the existing one with this
+					Files.copy(imageFile.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				} 
+				catch (IOException e) {
+					result.appendError("Internal error - couldn't copy image file " + imageFile.getAbsolutePath() + " to " + target.getAbsolutePath());
+					return result;
+				}
+			}
+			
+			//If made it here, added all given images to the users face-images folder, so
+			// add that folder to a new map to be passed to the other train function
+			usersToDirectories.put(key, userDirectory.getAbsolutePath());
 		}
-		return result;
+		
+		//Now just call the other method that expects organized directories
+		return trainDir(usersToDirectories);
 	}
 	
 	//Trains recognition algorithm on the (name, face images) pairs supplied
