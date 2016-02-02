@@ -102,7 +102,7 @@ public class OpenCVBinding {
 	
 	//Given a filepath to an image, this method will attempt to recognize all detected faces within
 	// and save the data into a facemap
-	public static Result recognize(String filepath, boolean attendance){
+	public static Result recognize(String filepath, boolean attendance, String className){
 		Result result = new Result();
 		
 		//Arguments to this script are filepath to image to be recognized,
@@ -130,7 +130,7 @@ public class OpenCVBinding {
 			}
 			result.facemap.setImagePath(facemapPath);
 			if(attendance){
-				Database.takeAttendance(result.facemap, "math");
+				Database.takeAttendance(result.facemap, className);
 			}
 		}
 		else {
