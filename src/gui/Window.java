@@ -26,23 +26,24 @@ import binding.OpenCVBinding;
 
 /**
  * GUI to handle image selection and calling of processing commands
+ * 
  * @author Andrew Dailey
  *
  */
 public class Window extends JFrame {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final int width = 960;
 	private final int height = 540;
 	private JPanel menuPanel, viewPanel;
-	
+
 	/**
 	 * Contructs a new GUI
 	 */
 	public Window() {
 		init();
 	}
-	
+
 	/**
 	 * Creates main window, JFrames, and buttons
 	 */
@@ -57,8 +58,8 @@ public class Window extends JFrame {
 
 		menuPanel = new JPanel();
 		menuPanel.setBorder(BorderFactory.createRaisedBevelBorder());
-		menuPanel.setPreferredSize(new Dimension(width * 1/5, height));
-		
+		menuPanel.setPreferredSize(new Dimension(width * 1 / 5, height));
+
 		JButton trainButton = new JButton("Train");
 		trainButton.addActionListener(new ActionListener() {
 
@@ -66,10 +67,10 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				train();
 			}
-			
+
 		});
 		menuPanel.add(trainButton);
-		
+
 		JButton identifyButton = new JButton("Identify");
 		identifyButton.addActionListener(new ActionListener() {
 
@@ -77,99 +78,100 @@ public class Window extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				identify();
 			}
-			
+
 		});
 		menuPanel.add(identifyButton);
-		
+
 		viewPanel = new JPanel();
 		viewPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-		viewPanel.setPreferredSize(new Dimension(width * 4/5, height));
-		
+		viewPanel.setPreferredSize(new Dimension(width * 4 / 5, height));
+
 		add(menuPanel, BorderLayout.WEST);
 		add(viewPanel, BorderLayout.EAST);
 
 		setVisible(true);
 	}
-	
+
 	/**
 	 * Select images to be used for training
 	 */
 	private void train() {
-		//TODO
+		// TODO
 		JFileChooser openFile = new JFileChooser();
-		
-		
-		//Have the user enter the name
-		String userInput = JOptionPane.showInputDialog(getContentPane(), "Enter the Name of the Student", "User Input", JOptionPane.INFORMATION_MESSAGE);
-		
-		//check if they entered something, and if not do nothing
-		if(userInput != null){
+
+		// Have the user enter the name
+		String userInput = JOptionPane.showInputDialog(getContentPane(), "Enter the Name of the Student", "User Input",
+				JOptionPane.INFORMATION_MESSAGE);
+
+		// check if they entered something, and if not do nothing
+		if (userInput != null) {
 			openFile.setMultiSelectionEnabled(true);
 			openFile.showOpenDialog(null);
-			
-		// Create a map using the file paths of selected images and send to training functions
-		if(openFile.getSelectedFiles() != null) {
-			
-			printFilePaths(openFile.getSelectedFiles());
-			putFilesInList(openFile.getSelectedFiles());
-			
-			printf(userInput);
-			Map<String,List<String>> m = new HashMap<String,List<String>>();
-			m.put(userInput, putFilesInList(openFile.getSelectedFiles()));
-			printf(m.get(userInput).toString());
-			
-			//Do the training
-			OpenCVBinding.Result result = OpenCVBinding.trainFiles(m);
-			
-			if(!(result.success)){
-				JOptionPane.showMessageDialog(getContentPane(), result.errors.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-			}else{
-				JOptionPane.showMessageDialog(getContentPane(), "Trained Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+			// Create a map using the file paths of selected images and send to
+			// training functions
+			if (openFile.getSelectedFiles() != null) {
+
+				printFilePaths(openFile.getSelectedFiles());
+				putFilesInList(openFile.getSelectedFiles());
+
+				printf(userInput);
+				Map<String, List<String>> m = new HashMap<String, List<String>>();
+				m.put(userInput, putFilesInList(openFile.getSelectedFiles()));
+				printf(m.get(userInput).toString());
+
+				// Do the training
+				OpenCVBinding.Result result = OpenCVBinding.trainFiles(m);
+
+				if (!(result.success)) {
+					JOptionPane.showMessageDialog(getContentPane(), result.errors.toString(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(getContentPane(), "Trained Successfully", "Success",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Null File", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-			
-		}else{
-			JOptionPane.showMessageDialog(this, "Null File", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		}
-		
-		
-		
 
 	}
-	
+
 	/**
 	 * Debug method for printing the locations of multiple selected files
-	 * @param files File objects of which to print paths
+	 * 
+	 * @param files
+	 *            File objects of which to print paths
 	 */
 	private void printFilePaths(File[] files) {
 		for (int i = 0; i < files.length; i++) {
 			System.out.println(files[i].getAbsolutePath());
 		}
 	}
-	
-	
-private ArrayList<String> putFilesInList(File[] files){
+
+	private ArrayList<String> putFilesInList(File[] files) {
 		ArrayList<String> list = new ArrayList<String>();
-		
-		for(int i = 0; i < files.length; i++){
-		list.add(files[i].getAbsolutePath());	
+
+		for (int i = 0; i < files.length; i++) {
+			list.add(files[i].getAbsolutePath());
 		}
-		
+
 		return list;
 	}
-	
+
 	/**
 	 * Select a single image to be analyzed
 	 */
 	private void identify() {
-		//TODO
+		// TODO
 		JFileChooser openFile = new JFileChooser();
 		openFile.showOpenDialog(null);
-		
-		if(openFile.getSelectedFile() != null) {
+
+		if (openFile.getSelectedFile() != null) {
 			// Send this location to processing
 			System.out.println(openFile.getSelectedFile().getAbsolutePath());
-			
+
 			// Display processed image with name overlays
 			viewPanel.removeAll();
 			viewPanel.add(createImageComponent(openFile.getSelectedFile().getAbsolutePath()));
@@ -178,10 +180,12 @@ private ArrayList<String> putFilesInList(File[] files){
 		}
 
 	}
-	
+
 	/**
 	 * Creates a swing component from an image path
-	 * @param path Path to the image
+	 * 
+	 * @param path
+	 *            Path to the image
 	 * @return JLabel containing the image
 	 */
 	private JLabel createImageComponent(String path) {
@@ -196,13 +200,12 @@ private ArrayList<String> putFilesInList(File[] files){
 		picLabel.setBounds(0, 0, viewPanel.getWidth(), viewPanel.getHeight());
 		return picLabel;
 	}
-	
+
 	/*
-	 * Just a simpler print method to print stuff to the consul
+	 * Shorthand method for printing to console
 	 */
-	private void printf(String s){
+	private void printf(String s) {
 		System.out.println(s);
-		
 	}
 
 }
