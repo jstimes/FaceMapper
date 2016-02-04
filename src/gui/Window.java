@@ -28,6 +28,7 @@ import binding.OpenCVBinding;
  * GUI to handle image selection and calling of processing commands
  *
  * @author Andrew Dailey
+ * @author Juan Venegas
  *
  */
 public class Window extends JFrame {
@@ -60,6 +61,7 @@ public class Window extends JFrame {
         menuPanel.setBorder(BorderFactory.createRaisedBevelBorder());
         menuPanel.setPreferredSize(new Dimension(width * 1 / 5, height));
         
+        // Button for training
         JButton trainButton = new JButton("Train");
         trainButton.addActionListener(new ActionListener() {
             
@@ -71,6 +73,7 @@ public class Window extends JFrame {
         });
         menuPanel.add(trainButton);
         
+        // Button for identifying an image
         JButton identifyButton = new JButton("Identify");
         identifyButton.addActionListener(new ActionListener() {
             
@@ -82,6 +85,7 @@ public class Window extends JFrame {
         });
         menuPanel.add(identifyButton);
         
+        // Panel to view analyzed image
         viewPanel = new JPanel();
         viewPanel.setBorder(BorderFactory.createLoweredBevelBorder());
         viewPanel.setPreferredSize(new Dimension(width * 4 / 5, height));
@@ -96,31 +100,27 @@ public class Window extends JFrame {
      * Select images to be used for training
      */
     private void train() {
-        // TODO
         JFileChooser openFile = new JFileChooser();
         
         // Have the user enter the name
         String userInput = JOptionPane.showInputDialog(getContentPane(), "Enter the Name of the Student", "User Input",
                                                        JOptionPane.INFORMATION_MESSAGE);
         
-        // check if they entered something, and if not do nothing
+        // Check if they entered something, and if not do nothing
         if (userInput != null) {
             openFile.setMultiSelectionEnabled(true);
             openFile.showOpenDialog(null);
             
-            // Create a map using the file paths of selected images and send to
-            // training functions
+            // Create a map using the file paths of selected images
+            // Send to training functions
             if (openFile.getSelectedFiles() != null) {
                 
-                //printFilePaths(openFile.getSelectedFiles());
                 putFilesInList(openFile.getSelectedFiles());
                 
-                //printf(userInput);
                 Map<String, List<String>> m = new HashMap<String, List<String>>();
                 m.put(userInput, putFilesInList(openFile.getSelectedFiles()));
-                //printf(m.get(userInput).toString());
                 
-                // Do the training
+                // Train OpenCV using bindings
                 OpenCVBinding.Result result = OpenCVBinding.trainFiles(m);
                 
                 if (!(result.success)) {
@@ -138,18 +138,6 @@ public class Window extends JFrame {
         
     }
     
-    /**
-     * Debug method for printing the locations of multiple selected files
-     *
-     * @param files
-     *            File objects of which to print paths
-     */
-    private void printFilePaths(File[] files) {
-        for (int i = 0; i < files.length; i++) {
-            System.out.println(files[i].getAbsolutePath());
-        }
-    }
-    
     private ArrayList<String> putFilesInList(File[] files) {
         ArrayList<String> list = new ArrayList<String>();
         
@@ -164,15 +152,12 @@ public class Window extends JFrame {
      * Select a single image to be analyzed
      */
     private void identify() {
-        // TODO
         JFileChooser openFile = new JFileChooser();
         openFile.showOpenDialog(null);
         
         if (openFile.getSelectedFile() != null) {
-            // Send this location to processing
-            System.out.println(openFile.getSelectedFile().getAbsolutePath());
             
-            // ask about the class name and if they want to take attendance
+            // Prompt user for class name
             String userInput = JOptionPane.showInputDialog(getContentPane(), "Enter Class Name",
                                                            "Class Name Requirement", JOptionPane.DEFAULT_OPTION);
             
@@ -181,8 +166,7 @@ public class Window extends JFrame {
                                                                    JOptionPane.YES_NO_OPTION);
                 
                 if (attendance == JOptionPane.YES_OPTION) {
-                    // do the process for identify but with attendance
-                    
+                    // Identify with attendance
                     OpenCVBinding.Result result = OpenCVBinding.recognize(openFile.getSelectedFile().getAbsolutePath(),
                                                                           true, userInput);
                     
@@ -193,13 +177,11 @@ public class Window extends JFrame {
                     repaint();
                     
                     if (!(result.success)) {
-                        // make an error pop-up
                         JOptionPane.showMessageDialog(getContentPane(), result.errors.toString(), "Error",
                                                       JOptionPane.ERROR_MESSAGE);
-                        
                     }
                 } else {
-                    // do the process for identify but without attendance
+                    // Identify without attendance
                     OpenCVBinding.Result result = OpenCVBinding.recognize(openFile.getSelectedFile().getAbsolutePath(),
                                                                           false, userInput);
                     
@@ -210,10 +192,8 @@ public class Window extends JFrame {
                     repaint();
                     
                     if (!(result.success)) {
-                        // make an error pop-up
                         JOptionPane.showMessageDialog(getContentPane(), result.errors.toString(), "Error",
                                                       JOptionPane.ERROR_MESSAGE);
-                        
                     }
                 }
             }
@@ -240,13 +220,6 @@ public class Window extends JFrame {
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
         picLabel.setBounds(0, 0, viewPanel.getWidth(), viewPanel.getHeight());
         return picLabel;
-    }
-    
-    /*
-     * Shorthand method for printing to console
-     */
-    private void printf(String s) {
-        System.out.println(s);
     }
     
 }
