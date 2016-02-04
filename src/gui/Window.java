@@ -182,30 +182,42 @@ public class Window extends JFrame {
                 
                 if (attendance == JOptionPane.YES_OPTION) {
                     // do the process for identify but with attendance
-                    printf("User selected yes");
-                    OpenCVBinding.Result result = OpenCVBinding.recognize(openFile.getSelectedFile().getAbsolutePath(), true, userInput);
                     
-                    if(!(result.success)){
-                        //make an error pop-up
-                        JOptionPane.showMessageDialog(getContentPane(), result.errors.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                    OpenCVBinding.Result result = OpenCVBinding.recognize(openFile.getSelectedFile().getAbsolutePath(),
+                                                                          true, userInput);
+                    
+                    // Display processed image with name overlays
+                    viewPanel.removeAll();
+                    viewPanel.add(createImageComponent(openFile.getSelectedFile().getAbsolutePath()));
+                    revalidate();
+                    repaint();
+                    
+                    if (!(result.success)) {
+                        // make an error pop-up
+                        JOptionPane.showMessageDialog(getContentPane(), result.errors.toString(), "Error",
+                                                      JOptionPane.ERROR_MESSAGE);
                         
                     }
                 } else {
                     // do the process for identify but without attendance
-                    OpenCVBinding.Result result = OpenCVBinding.recognize(openFile.getSelectedFile().getAbsolutePath(), false, userInput);
-                    if(!(result.success)){
-                        //make an error pop-up
-                        JOptionPane.showMessageDialog(getContentPane(), result.errors.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                    OpenCVBinding.Result result = OpenCVBinding.recognize(openFile.getSelectedFile().getAbsolutePath(),
+                                                                          false, userInput);
+                    
+                    // Display processed image with name overlays
+                    viewPanel.removeAll();
+                    viewPanel.add(createImageComponent(openFile.getSelectedFile().getAbsolutePath()));
+                    revalidate();
+                    repaint();
+                    
+                    if (!(result.success)) {
+                        // make an error pop-up
+                        JOptionPane.showMessageDialog(getContentPane(), result.errors.toString(), "Error",
+                                                      JOptionPane.ERROR_MESSAGE);
                         
                     }
                 }
             }
             
-            // Display processed image with name overlays
-            viewPanel.removeAll();
-            viewPanel.add(createImageComponent(openFile.getSelectedFile().getAbsolutePath()));
-            revalidate();
-            repaint();
         }
         
     }
