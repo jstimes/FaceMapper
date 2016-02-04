@@ -114,8 +114,8 @@ public class OpenCVBinding {
 	public static Result trainDir(Map<String, String> mapOfPeopleToDirectories) {
 		Result result = new Result();
 		for(String user : mapOfPeopleToDirectories.keySet()){
-			System.out.println(user);
-			String directory = mapOfPeopleToDirectories.get(user) + "/";
+			String directory = mapOfPeopleToDirectories.get(user);
+			System.out.println(directory);
 			long label = Database.getLabelForUser(user);
 			
 			//train script expects a directory path for training images folder, and user name (label) associated with those photos
