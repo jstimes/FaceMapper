@@ -83,7 +83,10 @@ def main():
 
 	#Get the labels and images
 	images, labels, last = get_images_and_labels(path, user)
-	if len(images) < 2:
+	
+	
+	
+	if len(images) < 1:
 		print "Error - need at least 2 images"
 		return
 	cv2.destroyAllWindows()
@@ -96,7 +99,7 @@ def main():
 	
 	# Test if model had enough data to recognize last picture in directory
 	test = identify_users.identify(last,False,"")
-	if len(test) > 0 and int(test[0]) == int(user):
+	if test is not None and len(test) > 0 and int(test[0]) == int(user):
 		print "success"
 	else:
 		print "failure"

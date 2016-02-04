@@ -173,6 +173,9 @@ public class OpenCVBinding {
 					result.appendError(noRecognizedFacesMsg);
 					return result;
 				}
+				else if (s.equals("Faces")){
+						System.out.println("none");
+				}
 				else {
 					//Results for each face come back as <int> <double>, label confidence
 					String[] parts = s.split(" ");

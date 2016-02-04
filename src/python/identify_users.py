@@ -27,7 +27,7 @@ def identify(pathToTestImage,isMainScript,newImagePath):
 
     # For face recognition we will use the the LBPH Face Recognizer
     recognizer = cv2.createLBPHFaceRecognizer()
-    print pathToTrainedModel
+    #print pathToTrainedModel
     recognizer.load(pathToTrainedModel)
 
     #Open image for prediction
