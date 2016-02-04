@@ -172,7 +172,7 @@ public class Window extends JFrame {
                     
                     // Display processed image with name overlays
                     viewPanel.removeAll();
-                    viewPanel.add(createImageComponent(openFile.getSelectedFile().getAbsolutePath()));
+                    viewPanel.add(createImageComponent(result.facemap.getMapPath()));
                     revalidate();
                     repaint();
                     
@@ -187,7 +187,7 @@ public class Window extends JFrame {
                     
                     // Display processed image with name overlays
                     viewPanel.removeAll();
-                    viewPanel.add(createImageComponent(openFile.getSelectedFile().getAbsolutePath()));
+                    viewPanel.add(createImageComponent(result.facemap.getMapPath()));
                     revalidate();
                     repaint();
                     
@@ -204,7 +204,7 @@ public class Window extends JFrame {
     
     /**
      * Creates a swing component from an image path
-     * 
+     *
      * @param path
      *            Path to the image
      * @return JLabel containing the image
