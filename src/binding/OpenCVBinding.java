@@ -121,7 +121,7 @@ public class OpenCVBinding {
 			//train script expects a directory path for training images folder, and user name (label) associated with those photos
 			ArrayList<String> args = new ArrayList<String>();
 			args.add(directory);
-			System.out.println(directory + "  ---CV");
+
 			args.add(Long.toString(label));
 			Result pythonResult = executeScript(trainScript, args);
 			

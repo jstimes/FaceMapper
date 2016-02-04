@@ -138,6 +138,11 @@ public class Window extends JFrame {
 
 	}
 
+	/**
+	 * Adds names of files to an ArrayList
+	 * @param files Files to be collected
+	 * @return ArrayList of file names
+	 */
 	private ArrayList<String> putFilesInList(File[] files) {
 		ArrayList<String> list = new ArrayList<String>();
 
