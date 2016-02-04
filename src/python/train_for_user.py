@@ -24,7 +24,7 @@ def main():
 	faceCascade = cv2.CascadeClassifier(cascadePath)
 
 	# For face recognition we will the the LBPH Face Recognizer 
-	recognizer = cv2.face.createLBPHFaceRecognizer()
+	recognizer = cv2.createLBPHFaceRecognizer()
 	
 	# Load a previously created model:
 	recognizer.load(pathToTrainedModel)

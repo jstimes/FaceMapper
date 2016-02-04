@@ -26,7 +26,7 @@ def identify(pathToTestImage,isMainScript,newImagePath):
     faceCascade = cv2.CascadeClassifier(cascadePath)
 
     # For face recognition we will use the the LBPH Face Recognizer
-    recognizer = cv2.face.createLBPHFaceRecognizer()
+    recognizer = cv2.createLBPHFaceRecognizer()
     print pathToTrainedModel
     recognizer.load(pathToTrainedModel)
 
@@ -50,8 +50,8 @@ def identify(pathToTestImage,isMainScript,newImagePath):
 
 		# Add label for each face found in image
         label = "Unrecognized"
-        filePath = os.path.join('src' 'database' 'userNameLabelMapping')
-        with open(filePath) as data_file:    
+        #filePath = 
+        with open(os.path.join('src', 'database', 'userNameLabelMapping')) as data_file:    
         	data = json.load(data_file)
         	for i,val in enumerate(data):
         		if data[i]["label"] == nbr_predicted:
