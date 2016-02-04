@@ -177,7 +177,7 @@ public class Window extends JFrame {
                                                            "Class Name Requirement", JOptionPane.DEFAULT_OPTION);
             
             if (userInput != null) {
-                Integer attendance = JOptionPane.showConfirmDialog(getContentPane(), "Take Attendnce?", "Attendance",
+                Integer attendance = JOptionPane.showConfirmDialog(getContentPane(), "Take Attendance?", "Attendance",
                                                                    JOptionPane.YES_NO_OPTION);
                 
                 if (attendance == JOptionPane.YES_OPTION) {
