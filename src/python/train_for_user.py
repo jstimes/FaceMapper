@@ -12,7 +12,8 @@ def identify(pathToTestImage,isMainScript,newImagePath):
     #TODO move this try block to the main method part
     try:
         #pathToTrainedModels = str(sys.argv[1])
-        pathToTrainedModel = os.path.join('src', 'python', 'TrainedModel')[:-1]
+        #pathToTrainedModel = os.path.join('src', 'python', 'TrainedModel')
+        pathToTrainedModel = "/home/tweets/FaceMapper/src/python/TrainedModel"
         #pathToTrainedModel = "src/python/TrainedModel"
         #pathToTestImage = str(sys.argv[1])
     except IndexError:
@@ -25,7 +26,8 @@ def identify(pathToTestImage,isMainScript,newImagePath):
     faceCascade = cv2.CascadeClassifier(cascadePath)
 
     # For face recognition we will use the the LBPH Face Recognizer
-    recognizer = cv2.face.createLBPHFaceRecognizer() 
+    recognizer = cv2.face.createLBPHFaceRecognizer()
+    print pathToTrainedModel
     recognizer.load(pathToTrainedModel)
 
     #Open image for prediction

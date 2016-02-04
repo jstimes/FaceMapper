@@ -114,12 +114,14 @@ public class OpenCVBinding {
 	public static Result trainDir(Map<String, String> mapOfPeopleToDirectories) {
 		Result result = new Result();
 		for(String user : mapOfPeopleToDirectories.keySet()){
-			String directory = mapOfPeopleToDirectories.get(user);
+			System.out.println(user);
+			String directory = mapOfPeopleToDirectories.get(user) + "/";
 			long label = Database.getLabelForUser(user);
 			
 			//train script expects a directory path for training images folder, and user name (label) associated with those photos
 			ArrayList<String> args = new ArrayList<String>();
 			args.add(directory);
+			System.out.println(directory + "  ---CV");
 			args.add(Long.toString(label));
 			Result pythonResult = executeScript(trainScript, args);
 			
@@ -200,6 +202,7 @@ public class OpenCVBinding {
 			for(String arg : arguments){
 				args += " " + arg;
 			}
+			System.out.println(args);
 			Process p = Runtime.getRuntime().exec("python " + pythonFilePath + script + args);
 			
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));

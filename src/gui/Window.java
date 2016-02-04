@@ -112,13 +112,13 @@ public class Window extends JFrame {
             // training functions
             if (openFile.getSelectedFiles() != null) {
                 
-                printFilePaths(openFile.getSelectedFiles());
+                //printFilePaths(openFile.getSelectedFiles());
                 putFilesInList(openFile.getSelectedFiles());
                 
-                printf(userInput);
+                //printf(userInput);
                 Map<String, List<String>> m = new HashMap<String, List<String>>();
                 m.put(userInput, putFilesInList(openFile.getSelectedFiles()));
-                printf(m.get(userInput).toString());
+                //printf(m.get(userInput).toString());
                 
                 // Do the training
                 OpenCVBinding.Result result = OpenCVBinding.trainFiles(m);
