@@ -20,7 +20,7 @@ import database.Database;
 // so the GUI can display the appropriate information
 public class OpenCVBinding {
 	
-	final static String FACE_IMAGES_PATH = "data\\faces";
+	final static String FACE_IMAGES_PATH = "data/faces";
 	final static String pythonFilePath = "src/python/";
 	final static String trainScript = "train_for_user.py";
 	final static String recognizeScript = "identify_users.py";
@@ -67,7 +67,7 @@ public class OpenCVBinding {
 		HashMap<String, String> usersToDirectories = new HashMap<>();
 		for(String key : mapOfPeopleToFiles.keySet()){
 			String nameLower = key.toLowerCase();
-			File userDirectory = new File(FACE_IMAGES_PATH + "\\" + nameLower);
+			File userDirectory = new File(FACE_IMAGES_PATH + "/" + nameLower);
 			
 			if(!userDirectory.exists()){
 				
@@ -87,7 +87,7 @@ public class OpenCVBinding {
 					return result;
 				}
 				String imageName = imageFile.getName();
-				File target = new File(userDirectory.getAbsolutePath() + "\\" + imageName);
+				File target = new File(userDirectory.getAbsolutePath() + "/" + imageName);
 				try {
 					//Copies the original file to a new file in this users face-images directory
 					// If the file already exists here (based on same names), it will replace the existing one with this

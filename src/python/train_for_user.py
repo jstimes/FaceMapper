@@ -12,7 +12,7 @@ def identify(pathToTestImage,isMainScript,newImagePath):
     #TODO move this try block to the main method part
     try:
         #pathToTrainedModels = str(sys.argv[1])
-        pathToTrainedModel = os.path.join('src', 'python', 'TrainedModel')
+        pathToTrainedModel = os.path.join('src', 'python', 'TrainedModel')[:-1]
         #pathToTrainedModel = "src/python/TrainedModel"
         #pathToTestImage = str(sys.argv[1])
     except IndexError:
@@ -20,12 +20,12 @@ def identify(pathToTestImage,isMainScript,newImagePath):
         return
 
     # For face detection we will use the Haar Cascade provided by OpenCV.
-    	cascadePath = os.path.join('src', 'python', 'haarcascade_frontalface_default.xml')
+    cascadePath = os.path.join('src', 'python', 'haarcascade_frontalface_default.xml')
     #cascadePath = "src/python/haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cascadePath)
 
     # For face recognition we will use the the LBPH Face Recognizer
-    recognizer = cv2.createLBPHFaceRecognizer() 
+    recognizer = cv2.face.createLBPHFaceRecognizer() 
     recognizer.load(pathToTrainedModel)
 
     #Open image for prediction
