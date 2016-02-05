@@ -101,8 +101,8 @@ public class Database {
 	
 	//Calls the other takeAttendance, but with today as the date string
 	public static void takeAttendance(FaceMap facemap, String className) {
-		int month = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		int day = Calendar.getInstance().get(Calendar.MONTH) + 1; //month starts at 0
+		int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		int month = Calendar.getInstance().get(Calendar.MONTH) + 1; //month starts at 0
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		String dateStr = "";
 		

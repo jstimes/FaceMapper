@@ -26,35 +26,59 @@ public class OpenCVBinding {
 	
 //	public static void main(String[] args) throws IOException {
 //		
-//		System.out.println("Training...");
-//		HashMap<String, String> map = new HashMap<String,String>();
-//		map.put("Paul", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\paul");
-//		map.put("Jacob", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob");
-//		map.put("Andrew", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\andrew");
-//		//FaceMap training = recognize("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\paul\\paul.1");
-//		Result training = recognize("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.1.jpg", true);
-//		//System.out.println(training.label);
+////		System.out.println("Training...");
+////		HashMap<String, String> map = new HashMap<String,String>();
+////		map.put("Paul", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\paul");
+////		map.put("Jacob", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob");
+////		map.put("Andrew", "C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\andrew");
+////		//FaceMap training = recognize("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\paul\\paul.1");
+////		Result training = recognize("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.1.jpg", true);
+////		//System.out.println(training.label);
 //		//Result training = trainDir(map);
 //		
-//		training.printOutput();
-//		training.printWarnings();
-//		training.printErrors();
-//		for(String entry : Database.retrieveStudentAttendanceRecords("Jacob")){
-//			System.out.println(entry);
-//		}
-//		FaceMap map = Database.retrieveDateAttendanceRecords("math", "01022016");
-//		for(FaceMapElement fme : map.elements){
-//			System.out.println(fme.name + " " + fme.confidence);
-//		}
-//		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
-//		LinkedList<String> images = new LinkedList<String>();
-//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.1.jpg");
-//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.2.jpg");
-//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.3.jpg");
-//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.4.jpg");
-//		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.5.jpg");
-//		map.put("Jacob", images);
-//		trainFiles(map);
+////		training.printOutput();
+////		training.printWarnings();
+////		training.printErrors();
+////		for(String entry : Database.retrieveStudentAttendanceRecords("Jacob")){
+////			System.out.println(entry);
+////		}
+////		FaceMap map = Database.retrieveDateAttendanceRecords("math", "01022016");
+////		for(FaceMapElement fme : map.elements){
+////			System.out.println(fme.name + " " + fme.confidence);
+////		}
+////		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+////		LinkedList<String> images = new LinkedList<String>();
+////		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.1.jpg");
+////		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.2.jpg");
+////		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.3.jpg");
+////		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.4.jpg");
+////		images.add("C:\\Users\\Jacob\\Desktop\\Spring16\\SE329\\project1\\FaceMapper\\data\\faces\\jacob\\jacob.5.jpg");
+////		
+////		map.put("Jacob", images);
+////		trainFiles(map);
+//		
+////		HashMap<String, String> dirs = new HashMap<String, String>();
+////		
+////		dirs.put("Jacob", "C:\\Users\\Jacob\\workspace\\FaceMapper\\data\\faces\\jacob");
+////		dirs.put("Connor", "C:\\Users\\Jacob\\workspace\\FaceMapper\\data\\faces\\connor");
+////		dirs.put("Paul", "C:\\Users\\Jacob\\workspace\\FaceMapper\\data\\faces\\paul");
+////		dirs.put("Andrew", "C:\\Users\\Jacob\\workspace\\FaceMapper\\data\\faces\\andrew");
+////		dirs.put("Juan", "C:\\Users\\Jacob\\workspace\\FaceMapper\\data\\faces\\juan");
+////		
+////		Result trainResult = trainDir(dirs);
+////		
+////		if(!trainResult.success){
+////			trainResult.printErrors();
+////		}
+////		
+////		else{
+////			trainResult.printWarnings();
+////			trainResult.printOutput();
+////			
+////			
+////		}
+//		
+//		
 //	}
 	
 	//Trains recognition algorithm on the (name, face images) pairs supplied
