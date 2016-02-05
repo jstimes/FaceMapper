@@ -34,8 +34,8 @@ import binding.OpenCVBinding;
 public class Window extends JFrame {
 	private static final long serialVersionUID = 1L;
 
-	private final int width = 960;
-	private final int height = 540;
+	private final int width = 1860;
+	private final int height = 1080;
 	private JPanel menuPanel, viewPanel;
 
 	/**

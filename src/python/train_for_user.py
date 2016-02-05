@@ -27,7 +27,7 @@ def main():
 	recognizer = cv2.createLBPHFaceRecognizer()
 	
 	# Load a previously created model:
-	recognizer.load(pathToTrainedModel)
+	#recognizer.load(pathToTrainedModel)
 
 	def get_images_and_labels(path, userLabel):
 		# Append all the absolute image paths in a list image_paths
@@ -90,7 +90,13 @@ def main():
 		print "Error - need at least 2 images"
 		return
 	cv2.destroyAllWindows()
-
+	
+	if not os.path.isfile(pathToTrainedModel):
+		open(pathToTrainedModel, 'a').close()
+	else:
+		#Don't overwrite previous
+		recognizer.load(pathToTrainedModel)
+	
 	# Perform the training and update previous model
 	recognizer.update(images, np.array(labels))
 
