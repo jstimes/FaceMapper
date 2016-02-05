@@ -1,11 +1,12 @@
 # FaceMapper
 SE 329 project
 
-***Testing***
-Use sample.py with an image to see how/what it is detecting as a face. This is important to use so that you know what is being trained on. Look at tweaking the parameters to "detectMultiScale" if you are having undesirable results (i.e, it's finding more than one face in a training image.)
+This project is functional in a Windows environment through Eclipse, with Python 2.7, OpenCV 2.4.10.
 
-***Training***
-Use train_for_user.py to train, serialize, and save a model for a certain user (look at in-file comments for parameters)
+The folder 'data/faces' contains training images and 'data/test' contains images used for testing. The constructed facemaps are stored in 'src/database/facemaps'.
 
-***Testing***
-Use identify_users.py to load models for each user in the system and then attempt to identify users in an image
+The application is run from 'src/gui/Main.java'. First train the recognition model by clicking 'Train' then enter a name and select photos to be used to train the model on that user. The more photos, the better the results. At least 2 are necessary as the last one is used to test if the training was successful or not. 
+
+Once the model is trained on each user desired, click identify to upload and identify users in another individual or group photo. Our model works well with individual photos but struggles with pictures containing several people. We believe this is due to lack of training data and poor qualitiy group photos.  
+
+When identifying a group photo, there is an option to take attendance if being used in a class setting. The application will save attendance info for those recognized in the photo and it can be retrieved later via the remaining UI buttons. 
