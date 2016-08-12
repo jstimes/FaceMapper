@@ -1,6 +1,8 @@
 # FaceMapper
 SE 329 project
 
+The goal was to develop an application to automate attendance taking in classrooms. After being fed training images for the faces of students in a class, it attempts to identify those individuals in class photos and take attendance accordingly.
+
 This project is functional in a Windows environment through Eclipse, with Python 2.7, OpenCV 2.4.10.
 
 The folder 'data/faces' contains training images and 'data/test' contains images used for testing. The constructed facemaps are stored in 'src/database/facemaps'.
